@@ -1,15 +1,9 @@
 package com.mycompany.mavenproject3;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.util.ArrayList;
 
 public class Mavenproject3 extends JFrame implements Runnable {
     private String text;
@@ -17,42 +11,47 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private int width;
     private BannerPanel bannerPanel;
     private JButton addProductButton;
-    private List<Product> productList = new ArrayList<>();
+    private List<Product> products;
 
-    public Mavenproject3() {
+    public Mavenproject3(List<Product> products) {
+        this.products = products;
+        this.text = generateProductText(products);
+
         setTitle("WK. STI Chill");
         setSize(600, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        productList.add(new Product(1, "P001", "Americano", "Coffee", 10000, 10));
-        productList.add(new Product(2, "P002", "Pandan Latte", "Coffee", 20000, 10));
-        productList.add(new Product(3, "P003", "Aren Latte", "Coffee", 15000, 10));
-        productList.add(new Product(4, "P004", "Matcha Frappucino", "Tea", 28000, 10));
-        productList.add(new Product(5, "P005", "Jus Apel", "Juice", 17000, 10));
-        
-        this.text = getBannerTextFromProducts();
-        this.x = -getFontMetrics(new Font("Arial", Font.BOLD, 18)).stringWidth(text);
-
-        // Panel teks berjalan
         bannerPanel = new BannerPanel();
         add(bannerPanel, BorderLayout.CENTER);
 
-        // Tombol "Kelola Produk"
         JPanel bottomPanel = new JPanel();
         addProductButton = new JButton("Kelola Produk");
         bottomPanel.add(addProductButton);
         add(bottomPanel, BorderLayout.SOUTH);
-        
+
         addProductButton.addActionListener(e -> {
-            new ProductForm(this).setVisible(true);
+            new ProductForm(products, this).setVisible(true);
         });
 
         setVisible(true);
 
         Thread thread = new Thread(this);
         thread.start();
+    }
+
+    public void refreshBanner() {
+        this.text = generateProductText(products);
+    }
+
+    private String generateProductText(List<Product> products) {
+        StringBuilder sb = new StringBuilder("Menu yang tersedia: ");
+        for (int i = 0; i < products.size(); i++) {
+            sb.append(products.get(i).getName());
+            if (i < products.size() - 1) sb.append(" | ");
+        }
+        return sb.toString();
     }
 
     class BannerPanel extends JPanel {
@@ -64,31 +63,6 @@ public class Mavenproject3 extends JFrame implements Runnable {
             g.drawString(text, x, getHeight() / 2);
         }
     }
-
-    public void setBannerText(String newText) {
-        this.text = newText;
-        this.x = -getFontMetrics(new Font("Arial", Font.BOLD, 18)).stringWidth(text);
-    }
-    
-    public String getBannerTextFromProducts() {
-        StringBuilder sb = new StringBuilder("Menu yang tersedia: ");
-        for (int i = 0; i < productList.size(); i++) {
-            sb.append(productList.get(i).getName());
-            if (i < productList.size() - 1) {
-                sb.append(" | ");
-            }
-        }
-        return sb.toString();
-    }
-
-    public void refreshBanner() {
-        setBannerText(getBannerTextFromProducts());
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
 
     @Override
     public void run() {
@@ -108,7 +82,9 @@ public class Mavenproject3 extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Mavenproject3();
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(1, "P001", "Americano", "Coffee", 18000, 10));
+        products.add(new Product(2, "P002", "Pandan Latte", "Coffee", 15000, 8));
+        new Mavenproject3(products);
     }
 }
-
