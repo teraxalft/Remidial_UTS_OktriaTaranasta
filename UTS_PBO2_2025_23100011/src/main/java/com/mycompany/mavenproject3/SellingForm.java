@@ -30,7 +30,7 @@ public class SellingForm extends JFrame {
 
         setTitle("WK. Cuan | Jual Barang");
         setSize(400, 300);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JPanel sellPanel = new JPanel(new GridBagLayout());
