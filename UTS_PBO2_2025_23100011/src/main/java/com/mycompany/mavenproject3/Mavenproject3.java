@@ -18,6 +18,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private BannerPanel bannerPanel;
     private JButton addProductButton;
     private JButton addSellButton;
+    private JButton addCustomerButton; 
     private List<Product> productList = new ArrayList<>();
 
     public Mavenproject3() {
@@ -32,7 +33,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
         productList.add(new Product(3, "P003", "Aren Latte", "Coffee", 15000, 10));
         productList.add(new Product(4, "P004", "Matcha Frappucino", "Tea", 28000, 10));
         productList.add(new Product(5, "P005", "Jus Apel", "Juice", 17000, 10));
-        
+
         this.text = getBannerTextFromProducts();
         this.x = -getFontMetrics(new Font("Arial", Font.BOLD, 18)).stringWidth(text);
 
@@ -40,22 +41,23 @@ public class Mavenproject3 extends JFrame implements Runnable {
         bannerPanel = new BannerPanel();
         add(bannerPanel, BorderLayout.CENTER);
 
-        // Tombol "Kelola Produk"
+        // Tombol
         JPanel bottomPanel = new JPanel();
 
         addProductButton = new JButton("Kelola Produk");
         addSellButton = new JButton("Kelola Penjualan");
+        addCustomerButton = new JButton("Kelola Data Pelanggan"); 
+
         bottomPanel.add(addProductButton);
         bottomPanel.add(addSellButton);
+        bottomPanel.add(addCustomerButton); 
+
         add(bottomPanel, BorderLayout.SOUTH);
-        
-        addProductButton.addActionListener(e -> {
-            new ProductForm(this).setVisible(true);
-        });
-        
-        addSellButton.addActionListener(e -> {
-            new SellingForm(this).setVisible(true);
-        });
+
+        // Aksi tombol
+        addProductButton.addActionListener(e -> new ProductForm(this).setVisible(true));
+        addSellButton.addActionListener(e -> new SellingForm(this).setVisible(true));
+        addCustomerButton.addActionListener(e -> new CustomerForm().setVisible(true)); 
 
         setVisible(true);
 
@@ -77,7 +79,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
         this.text = newText;
         this.x = -getFontMetrics(new Font("Arial", Font.BOLD, 18)).stringWidth(text);
     }
-    
+
     public String getBannerTextFromProducts() {
         StringBuilder sb = new StringBuilder("Menu yang tersedia: ");
         for (int i = 0; i < productList.size(); i++) {
@@ -96,7 +98,6 @@ public class Mavenproject3 extends JFrame implements Runnable {
     public List<Product> getProductList() {
         return productList;
     }
-
 
     @Override
     public void run() {

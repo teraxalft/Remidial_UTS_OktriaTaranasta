@@ -1,28 +1,39 @@
 package com.mycompany.mavenproject3;
 //Blm fix ygy 
-public class Customer {
-    private int id;
-    private String username;
-    private String email;
-    private String address;
-    private int phoneNumber;
-    private boolean gender;
 
-    public Customer(int id, String username, String email, String address, int phoneNumber) {
+public class Customer {
+
+    private String name;
+    private String phone;
+    private String email;
+
+    public Customer(String name, String phone, String email) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
     }
 
-    public int getId() { return id; }
-    public String getName() { return username; }
-    public String getEmail() {return email; }
-    public String getAddress() {return address; }
-    public int getPhoneNumber() { return phoneNumber; }
-    public boolean getGender() { return gender; }
-    public void setName(String name) { this.username = name; }
-    public void setEmail(String email) { this.email = email; }
-    public void setAddress(String address) { this.address = address; }
-    public void setPhoneNumber(int phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getName() {
+        return name;
+    }
 
-    public String getGenderString() {
-        return gender ? "Male" : "Female";
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
