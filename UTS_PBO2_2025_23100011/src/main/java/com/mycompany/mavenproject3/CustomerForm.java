@@ -1,6 +1,5 @@
 package com.mycompany.mavenproject3;
 
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-
 public class CustomerForm extends JFrame {
     private JTable customerTable;
     private DefaultTableModel tableModel;
@@ -29,13 +27,10 @@ public class CustomerForm extends JFrame {
     private JButton editButton;
     private JButton deleteButton;
 
-
     private List<Customer> customerList;
-
 
     public CustomerForm() {
         customerList = new ArrayList<>();
-
 
         setTitle("WK. Cuan | Data Pelanggan");
         setSize(750, 400);
@@ -43,17 +38,14 @@ public class CustomerForm extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-
         // TABEL
         tableModel = new DefaultTableModel(new String[]{"Nama", "No. HP", "Email", "Alamat"}, 0);
         customerTable = new JTable(tableModel);
         add(new JScrollPane(customerTable), BorderLayout.CENTER);
 
-
         // Agar Responsif
         customerTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         customerTable.setFillsViewportHeight(true);
-
 
         // FORM INPUT
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -61,21 +53,17 @@ public class CustomerForm extends JFrame {
         nameField = new JTextField(12);
         inputPanel.add(nameField);
 
-
         inputPanel.add(new JLabel("No. HP:"));
         phoneField = new JTextField(10);
         inputPanel.add(phoneField);
-
 
         inputPanel.add(new JLabel("Email:"));
         emailField = new JTextField(15);
         inputPanel.add(emailField);
 
-
         inputPanel.add(new JLabel("Alamat:"));
         addressField = new JTextField(20);
         inputPanel.add(addressField);
-
 
         // TOMBOL
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -83,19 +71,15 @@ public class CustomerForm extends JFrame {
         editButton = new JButton("Edit");
         deleteButton = new JButton("Hapus");
 
-
         buttonPanel.add(saveButton);
         buttonPanel.add(editButton);
         buttonPanel.add(deleteButton);
-
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.add(inputPanel, BorderLayout.CENTER);
         bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-
         add(bottomPanel, BorderLayout.SOUTH);
-
 
         // ACTIONS
         saveButton.addActionListener(e -> {
@@ -104,19 +88,16 @@ public class CustomerForm extends JFrame {
             String email = emailField.getText().trim();
             String address = addressField.getText().trim();
 
-
             if (name.isEmpty() || phone.isEmpty() || email.isEmpty() || address.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
                 return;
             }
-
 
             Customer customer = new Customer(name, phone, email,address);
             customerList.add(customer);
             tableModel.addRow(new Object[]{name, phone, email, address});
             clearFields();
         });
-
 
         editButton.addActionListener(e -> {
             int row = customerTable.getSelectedRow();
@@ -126,18 +107,15 @@ public class CustomerForm extends JFrame {
                 String email = emailField.getText().trim();
                 String address = addressField.getText().trim();
 
-
             if (name.isEmpty() || phone.isEmpty() || email.isEmpty() || address.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
                     return;
                 }
 
-
                 tableModel.setValueAt(name, row, 0);
                 tableModel.setValueAt(phone, row, 1);
                 tableModel.setValueAt(email, row, 2);
                 tableModel.setValueAt(address, row, 3);
-
 
                 Customer customer = customerList.get(row);
                 customer.setName(name);
@@ -145,13 +123,11 @@ public class CustomerForm extends JFrame {
                 customer.setEmail(email);
                 customer.setAddress(address);
 
-
                 clearFields();
             } else {
                 JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diedit!");
             }
         });
-
 
         deleteButton.addActionListener(e -> {
             int row = customerTable.getSelectedRow();
@@ -164,7 +140,6 @@ public class CustomerForm extends JFrame {
             }
         });
 
-
         customerTable.getSelectionModel().addListSelectionListener(e -> {
             int row = customerTable.getSelectedRow();
             if (row != -1) {
@@ -176,14 +151,12 @@ public class CustomerForm extends JFrame {
         });
     }
 
-
     private void clearFields() {
         nameField.setText("");
         phoneField.setText("");
         emailField.setText("");
         addressField.setText("");
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new CustomerForm().setVisible(true));
